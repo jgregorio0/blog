@@ -1,3 +1,13 @@
+- [BLOG](#blog)
+  * [Setup](#setup)
+    + [Host y Puerto](#host-y-puerto)
+  * [Obtener listado posts](#obtener-listado-posts)
+  * [Acceder detalle post](#acceder-detalle-post)
+  * [Anadir post](#anadir-post)
+  * [Actualizar post](#actualizar-post)
+  * [Eliminar post](#eliminar-post)
+  * [Env](#env)
+
 # BLOG
 
 > Blog con Nuxt y MarkDown
@@ -129,7 +139,7 @@ rmPost (vuexContext, postId) {
       },
 ```
 
-## Env asdfasdf
+## Env
 Permite inyectar variables al contexto de la aplicación
 
 - nuxt.config.js
