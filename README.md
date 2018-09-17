@@ -129,8 +129,8 @@ rmPost (vuexContext, postId) {
       },
 ```
 
-##Env
-Permite inyectar variables al contexto de la aplicación.
+## Env asdfasdf
+Permite inyectar variables al contexto de la aplicación
 
 - nuxt.config.js
 
