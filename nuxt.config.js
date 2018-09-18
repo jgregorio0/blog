@@ -1,4 +1,5 @@
 const axios = require('axios')
+const firebaseEnv = require('./firebase.env')
 
 module.exports = {
   /*
@@ -44,7 +45,7 @@ module.exports = {
   },
   env: {
     firebaseUrl:
-      process.env.FIREBASE_URL || "https://blog-17d1f.firebaseio.com",
+      process.env.FIREBASE_URL || firebaseEnv.databaseURL,
     firebaseSignUpUrl:
       process.env.FIREBASE_SIGN_UP_URL ||
       "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=",
@@ -52,7 +53,7 @@ module.exports = {
       process.env.FIREBASE_LOGIN_URL ||
       "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=",
     firebaseApiKey:
-      process.env.FIREBASE_API_KEY || "AIzaSyAganj3oUMo86yAr4sO0s1KCvxiqXU2bLQ"
+      process.env.FIREBASE_API_KEY || firebaseEnv.apiKey
   },
   router: {
     base: '/blog/',
@@ -71,7 +72,7 @@ module.exports = {
   generate: {
     routes: function() {
       return axios
-        .get(process.env.firebaseUrl + "/posts.json")
+        .get(firebaseEnv.databaseURL + "/posts.json")
         .then(res => {
           const postsArray = [];
           for (let key in res.data) {

@@ -30,4 +30,4 @@ static/workbox-sw*.js
 .history
 .vagrant
 package-lock.json
-firebase.js
+*.env
