@@ -69,7 +69,6 @@ module.exports = {
   },
   generate: {
     routes: function() {
-      console.log(firebaseEnv);
       return axios
         .get(firebaseEnv.databaseURL + "/posts.json")
         .then(res => {
