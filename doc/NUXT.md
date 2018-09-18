@@ -1,6 +1,6 @@
-#NUXT
-##Requerimientos
-###Node JS y NPM con NVM
+# NUXT
+##  Requerimientos
+### Node JS y NPM con NVM
 
 ```
 $ git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm   	&& git checkout `git describe --abbrev=0 --tags`
@@ -12,10 +12,10 @@ $ node -v
 $ npm -v
 ```
 
-###NPX y CREATE-NUXT-APP
+### NPX y CREATE-NUXT-APP
 `npm install -g npx npx create-nuxt-app <my-project>`
-##Configuración
-###Host y Puerto
+##  Configuración
+### Host y Puerto
 
 - /package.json
 
@@ -28,7 +28,7 @@ $ npm -v
 }
 ```
 
-##Comandos
+##  Comandos
 
 1. Forzar cambios en los componentes .vue
 
@@ -45,7 +45,7 @@ npm cache clean --force
 npm i
 ```
 
-##Estructura
+##  Estructura
 
 - assets
 - components
@@ -57,18 +57,18 @@ npm i
 - store
 - Router
 
-##Nuxt-link
+##  Nuxt-link
 Enlazar con secciones de la app mediante nuxt-link en vez de router-link
 
 ```
 <nuxt-link to="/posts"></nuxt-link>
 ```
 
-##Validate
+##  Validate
 
-##Pages
+##  Pages
 
-##Layouts
+##  Layouts
 Dentro del directorio layout podemos declarar distintos layouts para nuestra aplicación. Por defecto siempre utiliza default.vue.
 Podemos declarar un layout para errores que se tiene que llamar error.vue.
 
@@ -85,7 +85,7 @@ layout: 'other'
 }
 ```
 
-##Assets
+##  Assets
 Se pueden incluir imagines, estilos CSS, ficheros JS, etc… Para acceder a los recursos la ruta se resuelve como `~assets`
 
 - index.vue
@@ -95,7 +95,7 @@ Se pueden incluir imagines, estilos CSS, ficheros JS, etc… Para acceder a los 
 background-image: url('~assets/images/main-background.jpg');
 ```
 
-##AsyncData
+## AsyncData
 Para optimizar SEO y que SSR devuelva un HTML con datos precargados, se utiliza asyncData. Los datos contenidos en asyncData serán renderizados por el servidor antes de devolver HTML al cliente.
 Es importante tener en cuenta que:
 
@@ -189,7 +189,7 @@ asyncData(context) {
     }
 ```
 
-##Store
+## Store
 Para centralizar los datos de nuestra aplicación podemos utilizar VUEX. Debemos crear un fichero
 
 - /store/index.js
@@ -223,7 +223,7 @@ const createStore = () => {
 export default createStore
 ```
 
-##Fetch
+## Fetch
 Para cargar datos podemos utilizar el método `Fetch`
 Es importante tener en cuenta que:
 
@@ -273,7 +273,7 @@ fetch(context) {
     }
 ```
 
-##Nuxt server init method
+## Nuxt server init method
 Para inicializar datos desde el servidor podemos utilizar la acción nuxtServerInit en el Store. Esta acción es ejecutada por Nuxt.
 
 ```
@@ -316,13 +316,13 @@ actions: {
     }
 ```
 
-##Axios
+## Axios
 
 ```
 npm i --save axios
 ```
 
-####1. Actualizar store mediante una petición HTTP a firebase
+#### 1. Actualizar store mediante una petición HTTP a firebase
 
 ```
 nuxtServerInit(vuexContext, context) {
@@ -340,7 +340,7 @@ nuxtServerInit(vuexContext, context) {
 }
 ```
 
-####2. Acceder a un solo post
+#### 2. Acceder a un solo post
 
 ```
 asyncData(context) {
@@ -357,7 +357,7 @@ asyncData(context) {
 }
 ```
 
-####3. Subir datos a firebase
+#### 3. Subir datos a firebase
 
 ```
 methods: {
@@ -370,7 +370,7 @@ methods: {
 }
 ```
 
-####4. Actualizar datos
+#### 4. Actualizar datos
 
 ```
 methods: {
@@ -383,7 +383,9 @@ methods: {
                 console.error(e)
             })
     }
-}####1. Actualizar store mediante una petición HTTP a firebase
+}
+
+#### 1. Actualizar store mediante una petición HTTP a firebase
 
 ```
 nuxtServerInit(vuexContext, context) {
@@ -401,7 +403,7 @@ nuxtServerInit(vuexContext, context) {
 }
 ```
 
-####2. Acceder a un solo post
+#### 2. Acceder a un solo post
 
 ```
 asyncData(context) {
@@ -418,7 +420,7 @@ asyncData(context) {
 }
 ```
 
-####3. Subir datos a firebase
+#### 3. Subir datos a firebase
 
 ```
 methods: {
@@ -431,7 +433,7 @@ methods: {
 }
 ```
 
-####4. Actualizar datos
+#### 4. Actualizar datos
 
 ```
 methods: {
@@ -447,7 +449,7 @@ methods: {
 }
 ```
 
-##Vuex & axios CRUD
+## Vuex & axios CRUD
 
 - Firebase Docs: https://firebase.google.com/docs/database/
 - Axios: https://github.com/axios/axios
@@ -455,7 +457,7 @@ methods: {
 * Todos los cambios en el store de vuex requieren reinicio, no carga en caliente.
 
 Podemos crear un CRUD con Vuex y axios
-####1. Creamos Store `store/index.js`
+#### 1. Creamos Store `store/index.js`
 
 ```
 import Vuex from 'vuex'
@@ -538,7 +540,7 @@ const createStore = () => {
 export default createStore
 ```
 
-####2. Crear post
+#### 2. Crear post
 
 ```
 <AdminPostForm @submit="addPost" ></AdminPostForm >
@@ -555,7 +557,7 @@ methods: {
 }
 ```
 
-####3. Lista de posts
+#### 3. Lista de posts
 
 ```
 <PostList : posts="loadedPosts"></PostList>
@@ -568,7 +570,7 @@ computed: {
 }
 ```
 
-####4. Detalle de post
+#### 4. Detalle de post
 
 ```
 asyncData(context) {
@@ -585,7 +587,7 @@ asyncData(context) {
 }
 ```
 
-####5. Eliminar post
+#### 5. Eliminar post
 
 1. components/Posts/PostList.vue
 
@@ -648,13 +650,13 @@ asyncData(context) {
 
         ```
 
-##Firebase
+## Firebase
 
 - Ref: https://github.com/james2doyle/nuxt-firebase-auth
 
 `$ npm i –-save firebase`
 
-####1. Crear fichero de configuración con los datos de conexión a firebase
+#### 1. Crear fichero de configuración con los datos de conexión a firebase
 
 - /firebase-config.js
 
@@ -669,7 +671,7 @@ module.exports = {
 }
 ```
 
-####2. Crear pugin de inicialización fireinit
+#### 2. Crear pugin de inicialización fireinit
 
 ```
 plugins / fireinit.js
@@ -693,7 +695,7 @@ export default function ({
 }
 ```
 
-####3. Añadir plugin en la configuración de NUXT
+#### 3. Añadir plugin en la configuración de NUXT
 
 - /nuxt.config.js
 
@@ -709,7 +711,7 @@ plugins: [
 ];
 ```
 
-####4. Utilizar firebase en componente
+#### 4. Utilizar firebase en componente
 
 ```
 methods: {
@@ -718,7 +720,7 @@ methods: {
     }
 }
 ```
-####5. Configurar DB con autentificacion
+#### 5. Configurar DB con autentificacion
 
 ```
 {
@@ -730,8 +732,8 @@ methods: {
 }
 
 ```
-##Config, plugins & modules
-###Mode
+## Config, plugins & modules
+### Mode
 
 1. Universal
 
@@ -741,7 +743,7 @@ Incluye SSR (server side rendering)
 
 Solo para aplicaciones SPA (single page app)
 
-###Head
+### Head
 Todo lo que incluye en la cabecera HTML de toda la aplicación
 
 ```
@@ -770,7 +772,7 @@ title: 'Posts'
 }
 ```
 
-###Loading
+### Loading
 Barra de progreso controlada por NUXT al navegar por la app.
 Para deshabilitarla asignar loading a false:
 
@@ -781,7 +783,7 @@ Para deshabilitarla asignar loading a false:
 loading: false
 ```
 
-###Loading indicator
+### Loading indicator
 En las aplicaciones cuyo modo es SPA (mode: ’spa’) se puede añadir un spinner:
 
 ```
@@ -792,12 +794,12 @@ loadingIndicator: {
 }
 ```
 
-###CSS
+### CSS
 Declarar hojas de estilo CSS globales
 Build
 Permite modificar el proceso de compilación
 
-###Env
+### Env
 Permite inyectar variables al contexto de la aplicación.
 
 - nuxt.config.js
@@ -815,13 +817,13 @@ rmPost (vuexContext, postId) {
 return axios.delete(process.env.firebaseUrl + '/posts/' + postId + '.json')
 ```
 
-###Generate
+### Generate
 Permite modificar el proceso de generar portales estáticos
 
-###rootDir
+### rootDir
 Modifica la ruta principal del proyecto
 
-###Router
+### Router
 Sobrescribe y extender rutas generadas por NUXT.
 Por ejemplo, para todas las rutas que no estén declaradas podemos redirigir a la página principal:
 
@@ -839,7 +841,7 @@ linkActiveClass: 'active'
 }
 ```
 
-###srcDir
+### srcDir
 Permite definir la carpeta raiz de todas las carpetas predefinidas de NUXT `srcDir: 'nuxt-src/'`
 
 - nuxt-src/
@@ -852,7 +854,7 @@ Permite definir la carpeta raiz de todas las carpetas predefinidas de NUXT `srcD
   - static
   - store
 
-###transition
+### transition
 Permite configurar animaciones en la transición entre páginas de la aplicación
 
 ```
@@ -862,7 +864,7 @@ mode: 'out-in'
 }
 ```
 
-###Plugins
+### Plugins
 Permite ejecutar código de manera global al inicializar nuestra aplicación. Ya que no tenemos acceso al fichero main.js podemos usar plugins para añadir funcionalidad global.
 Por ejemplo, podemos declarar componentes de manera global:
 
@@ -888,7 +890,7 @@ Vue.component("PostList", PostList);
 plugins: ["~plugins/core-components.js"];
 ```
 
-###Modules
+### Modules
 Permite añadir módulos desarrollados por terceros.
 
 - nuxt.config.js
@@ -904,7 +906,7 @@ credentials: false
 },
 ```
 
-##Middleware & Authentification
+## Middleware & Authentification
 Middleware permite definir funciones que se ejecutan antes de renderizar una o varias páginas. 1. La función middleware se ejecuta antes de renderizar la página en el servidor (si existe SSR) o en el cliente.
 
 - middleware/log.js
@@ -938,7 +940,7 @@ router: {
 },
 ```
 
-###Firebase Auth
+### Firebase Auth
 
 - Firebase Auth REST API: https://firebase.google.com/docs/reference/rest/auth/
 
@@ -946,7 +948,7 @@ Podemos implementar un servicio de autentificacion con firebase.
 
 1. Debemos activar authentification en Firebase para nuestro proyecto
 
-####Registro / Login / Logout
+#### Registro / Login / Logout
 
 - pages/admin/auth/index.vue
 
@@ -1106,7 +1108,7 @@ logout(vuexContext) {
 }
 ```
 
-####Mantener usuario autentificado al recargar la pagina
+#### Mantener usuario autentificado al recargar la pagina
 
 - layouts/admin.vue
 
@@ -1154,7 +1156,7 @@ initAuth(vuexContext, req) {
 }
 ```
 
-####Limitar acceso a zona privada
+#### Limitar acceso a zona privada
 
 - store/index.js
 
@@ -1176,7 +1178,7 @@ export default function (context) {
 }
 ```
 
-##Producción
+## Producción
 ###Universal (SEO)
 Es necesaria una versión de Node js superior a 8.x en el servidor.
 Primera vista es renderizada dinámicamente en el servidor. Después funciona como una SPA.
@@ -1245,7 +1247,7 @@ npm run generate
 
 3. Subir carpeta dist al servidor
 
-####Optimize generate
+#### Optimize generate
 Podemos optimizar la generación estática de contenido dinámico limitando las peticiones HTTP. Para ello podemos construir un objeto con la ruta y el contenido:
 
 - nuxt.config.js
@@ -1295,7 +1297,7 @@ asyncData(context) {
 }
 ```
 
-####Optimiza el tamaño de los ficheros generados
+#### Optimiza el tamaño de los ficheros generados
 
 ```
   build: {

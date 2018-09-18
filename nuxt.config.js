@@ -1,3 +1,5 @@
+const axios = require('axios')
+
 module.exports = {
   /*
   ** Build configuration
@@ -53,6 +55,7 @@ module.exports = {
       process.env.FIREBASE_API_KEY || "AIzaSyAganj3oUMo86yAr4sO0s1KCvxiqXU2bLQ"
   },
   router: {
+    base: '/blog/',
     extendRoutes(routes, resolve) {
       routes.push({
         path: "*",
@@ -68,7 +71,7 @@ module.exports = {
   generate: {
     routes: function() {
       return axios
-        .get(process.env.firebaseUrl + '/posts.json')
+        .get(process.env.firebaseUrl + "/posts.json")
         .then(res => {
           const postsArray = [];
           for (let key in res.data) {
