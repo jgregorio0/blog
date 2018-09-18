@@ -140,10 +140,48 @@ rmPost (vuexContext, postId) {
 ## Env
 Permite inyectar variables al contexto de la aplicación
 
+- firebase.env
+Crear fichero con datos de entorno firebase
+```
+module.exports = {
+    apiKey: "API",
+    authDomain: "domain",
+    databaseURL: "database",
+    projectId: "id",
+    storageBucket: "store",
+    messagingSenderId: "msg"
+  }
+
+```
+
 - nuxt.config.js
+El fichero de configuracion de nuxt esta preparado para obtener estos parametros del entorno
 
 ```
 env: {
     firebaseUrl: process.env.FIREBASE_URL || 'https://...firebaseio.com'
 }
+```
+
+## Firebase Configuracion
+1. Crear base de datos `Realtime Database` con los siguientes permisos:
+
+```
+{
+  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
+  "rules": {
+    ".read": true,
+    ".write": "auth != null"
+  }
+}
+```
+
+2. Configurar autorizacion con correo electronico y anadir usuario administrador desde la consola de firebase.
+
+## Desplegar en Github Pages
+- Documentacion Nuxt: https://nuxtjs.org/faq/github-pages/
+
+```
+npm run generate
+npm run deploy
 ```
