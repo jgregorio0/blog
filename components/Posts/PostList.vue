@@ -5,8 +5,7 @@
       :key="post.id"
       :id="post.id"
       :title="post.title"
-      :previewText="post.previewText"
-      :thumbnail="post.thumbnail"
+      :content="post.content"
       @rmPost="rmPost"></PostPreview>
   </section>
 </template>
@@ -31,14 +30,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .post-list {
-    display: flex;
-    padding: 20px;
-    box-sizing: border-box;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
-</style>

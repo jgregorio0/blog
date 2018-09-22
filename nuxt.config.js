@@ -1,5 +1,5 @@
-const axios = require('axios')
-const firebaseEnv = require('./firebase.env')
+const axios = require("axios");
+const firebaseEnv = require("./firebase.env");
 
 module.exports = {
   /*
@@ -24,7 +24,7 @@ module.exports = {
   /*
   ** Modules
   */
-  modules: ["@nuxtjs/pwa"],
+  modules: ["@nuxtjs/pwa", "bootstrap-vue/nuxt"],
   /*
   ** Global CSS
   */

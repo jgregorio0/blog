@@ -5,14 +5,18 @@
   "author": "jgregorio",
   "private": true,
   "dependencies": {
+    "@nuxtjs/pwa": "latest",
     "axios": "^0.18.0",
+    "bootstrap-vue": "^2.0.0-rc.11",
+    "firebase": "^5.5.0",
     "js-cookie": "^2.2.0",
     "nuxt": "latest",
-    "@nuxtjs/pwa": "latest"
+    "showdown": "^1.8.6",
+    "tocbot": "^4.4.0"
   },
   "config": {
     "nuxt": {
-      "host": "0.0.0.0",
+      "host": "localhost",
       "port": "3000"
     }
   },

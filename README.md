@@ -2,15 +2,6 @@
 
 > Blog con Nuxt y MarkDown
 
-* [Setup](#setup)
-  + [Host y Puerto](#host-y-puerto)
-* [Obtener listado posts](#obtener-listado-posts)
-* [Acceder detalle post](#acceder-detalle-post)
-* [Anadir post](#anadir-post)
-* [Actualizar post](#actualizar-post)
-* [Eliminar post](#eliminar-post)
-* [Env](#env)
-
 ## Setup
 ### Host y Puerto
 
@@ -27,7 +18,10 @@
 
 ```bash
 # install dependencies
-$ npm install # Or yarn install
+$ rm -rf node_modules/
+$ rm -f package-lock.json
+$ npm cache clean --force
+$ npm i
 
 # serve with hot reload at localhost:3000
 # service worker is disabled in dev
@@ -44,7 +38,27 @@ $ npm run generate
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
 
 ## Comandos
+echo "*********CONFIG NODE_MODULES*********"
+   mkdir /home/vagrant/node_modules
+   ln -s /home/vagrant/node_modules /home/vagrant/project/node_modules
 
+   echo "*********INSTALL NVM && NODEJS && NPM*********"
+   TODO change to user vagrant??
+  cd /home/vagrant
+  git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
+  echo "source ~/.nvm/nvm.sh" >> ~/.profile
+  source ~/.profile
+  nvm install 8.12
+  nvm alias default 8.12
+  node -v
+  npm -v
+
+  echo "*********INSTALL VUE CLI*********"
+  npm install -g vue-cli
+
+  echo "*********INSTALL PROJECT*********"
+  cd /home/vagrant/project
+  npm install
 1. Forzar cambios en los componentes .vue
 
 ```

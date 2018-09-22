@@ -5,77 +5,64 @@
             @click="$emit('rmPost', id)">
       <span aria-hidden="true">&times;</span>
     </button>
-    <nuxt-link :to="$route.path.includes('/admin') ?  '/admin/' + id : '/posts/' + id">
       <article>
-        <div class="post-thumbnail"
-             :style="{'background-image': 'url(' + thumbnail + ')'}"></div>
-        <div class="post-content">
-          <h1>{{ title }}</h1>
-          <p>{{ previewText }}</p>
+        <nuxt-link :to="$route.path.includes('/admin') ?  '/admin/' + id : '/posts/' + id">
+          <div class="post-title">
+            <h1>{{ title }}</h1>
+          </div>
+        </nuxt-link>
+          <div class="post-content" v-html="contentHTML">
+            
         </div>
       </article>
-    </nuxt-link>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'PostPreview',
-    props: {
-      id: {
-        type: String,
-        required: true
-      },
-      title: {
-        type: String,
-        required: true
-      },
-      previewText: {
-        type: String,
-        required: true
-      },
-      thumbnail: {
-        type: String,
-        required: true
-      }
+import showdown from "showdown";
+import tocbot from "tocbot";
+
+export default {
+  name: "PostPreview",
+  props: {
+    id: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
+    },
+    content: {
+      type: String,
+      required: true
     }
+  },
+  computed: {
+    contentHTML() {
+      let converter = new showdown.Converter();
+      return converter.makeHtml(this.content);
+    },
+    toc() {
+      this.contentHTML;
+      return toc.refresh();
+    }
+  },
+  mounted() {
+    tocbot.init({
+      // Where to render the table of contents.
+      tocSelector: ".js-toc",
+      // Where to grab the headings to build the table of contents.
+      contentSelector: ".js-toc-content",
+      // Which headings to grab inside of the contentSelector element.
+      headingSelector: "h1, h2, h3"
+    });
   }
+};
 </script>
-
 <style scoped>
-  .post-preview {
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 2px #ccc;
-    background-color: white;
-    width: 90%;
-  }
-
-  a {
-    text-decoration: none;
-    color: black;
-  }
-
-  @media (min-width: 850px) {
-    .post-preview {
-      width: 400px;
-      margin: 10px;
-    }
-  }
-
-  .post-thumbnail {
-    width: 100%;
-    height: 200px;
-    background-position: center;
-    background-size: cover;
-  }
-
-  .post-content {
-    padding: 10px;
-    text-align: center;
-  }
-
-  a:hover .post-content,
-  a:active .post-content {
-    background-color: #ccc;
-  }
+.post-content {
+  max-height: 200px;
+  overflow-y: scroll;
+}
 </style>
