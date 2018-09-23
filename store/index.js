@@ -1,6 +1,7 @@
-import Vuex from 'vuex'
-import axios from 'axios'
-import Cookie from 'js-cookie'
+import Vuex from "vuex";
+import axios from "axios";
+import Cookie from "js-cookie";
+import firebase from "firebase";
 
 const createStore = () => {
   return new Vuex.Store({
@@ -9,147 +10,207 @@ const createStore = () => {
       token: null
     },
     getters: {
-      loadedPosts (state) {
-        return state.loadedPosts
+      loadedPosts(state) {
+        return state.loadedPosts;
       },
-      isAuthenticated (state) {
-        return state.token != null
+      isAuthenticated(state) {
+        return state.token != null;
       }
     },
     mutations: {
-      setPosts (state, posts) {
-        state.loadedPosts = posts
+      setPosts(state, posts) {
+        state.loadedPosts = posts;
       },
-      addPost (state, post) {
-        state.loadedPosts.push(post)
+      addPost(state, post) {
+        state.loadedPosts.push(post);
       },
-      editPost (state, editedPost) {
-        const iPost = state.loadedPosts.findIndex(post => post.id === editedPost.id)
-        state.loadedPosts[iPost] = editedPost
+      editPost(state, editedPost) {
+        const iPost = state.loadedPosts.findIndex(
+          post => post.id === editedPost.id
+        );
+        state.loadedPosts[iPost] = editedPost;
       },
-      rmPost (state, postId) {
-        const iPost = state.loadedPosts.findIndex(post => post.id === postId)
-        state.loadedPosts.splice(iPost, 1)
+      rmPost(state, postId) {
+        const iPost = state.loadedPosts.findIndex(post => post.id === postId);
+        state.loadedPosts.splice(iPost, 1);
       },
-      setToken (state, token) {
-        state.token = token
+      setToken(state, token) {
+        console.log("setToken", token);
+        state.token = token;
       },
-      clearToken (state) {
-        state.token = null
+      clearToken(state) {
+        state.token = null;
       }
     },
     actions: {
-      nuxtServerInit (vuexContext, context) {
-        return axios.get(process.env.firebaseUrl + '/posts.json')
+      nuxtServerInit(vuexContext, context) {
+        return axios
+          .get(process.env.firebaseUrl + "/posts.json")
           .then(res => {
-            const postsArray = []
+            const postsArray = [];
             for (let key in res.data) {
-              postsArray.push({...res.data[key], id: key})
+              postsArray.push({ ...res.data[key], id: key });
             }
-            vuexContext.commit('setPosts', postsArray)
+            vuexContext.commit("setPosts", postsArray);
           })
           .catch(e => {
-            console.error(e)
-          })
+            console.error(e);
+          });
       },
-      setPosts (vuexContext, posts) {
-        vuexContext.commit('setPosts', posts)
+      setPosts(vuexContext, posts) {
+        vuexContext.commit("setPosts", posts);
       },
-      addPost (vuexContext, post) {
-        return axios.post(process.env.firebaseUrl + '/posts.json?auth=' + vuexContext.state.token, post)
+      addPost(vuexContext, post) {
+        return firebase
+          .database()
+          .ref("posts")
+          .push(post)
           .then(res => {
-            vuexContext.commit('addPost', {...post, id: res.data.name})
+            vuexContext.commit("addPost", { ...post, id: res.data.name });
           })
           .catch(e => {
-            console.error(e)
-          })
+            console.error(e);
+          });
       },
-      editPost (vuexContext, editedPost) {
-        return axios.put(process.env.firebaseUrl + '/posts/' + editedPost.id + '.json?auth=' + vuexContext.state.token, editedPost)
+      editPost(vuexContext, editedPost) {
+        return firebase
+          .database()
+          .ref("posts/" + editedPost.id)
+          .set(editedPost)
           .then(res => {
-            vuexContext.commit('editPost', editedPost)
+            vuexContext.commit("addPost", {
+              ...post,
+              id: res.data.name
+            });
           })
           .catch(e => {
-            console.error(e)
-          })
+            console.error(e);
+          });
       },
-      rmPost (vuexContext, postId) {
-        return axios.delete(process.env.firebaseUrl + '/posts/' + postId + '.json?auth=' + vuexContext.state.token)
+      rmPost(vuexContext, postId) {
+        return firebase
+          .database()
+          .ref("posts/" + postId)
+          .set(null)
           .then(res => {
-            vuexContext.commit('rmPost', postId)
+            vuexContext.commit("addPost", {
+              ...post,
+              id: res.data.name
+            });
           })
           .catch(e => {
-            console.error(e)
-          })
+            console.error(e);
+          });
       },
-      authUser (vuexContext, authData) {
+      authUser(vuexContext, authData) {
+        console.log("authUser", authData);
         // Login
-        let url = process.env.firebaseLoginUrl
+        firebase
+          .auth()
+          .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+          .then(() => {
+            console.log("set persistence to session");
 
-        return axios.post(url + process.env.firebaseApiKey,
-          {
-            email: authData.email,
-            password: authData.pass,
-            returnSecureToken: true
-          })
-          .then(res => {
-            const token = res.data.idToken;
-            const expiresInMillis = Number(res.data.expiresIn) * 1000;
-            const expiration = new Date().getTime() + expiresInMillis;
+            return firebase
+              .auth()
+              .signInWithEmailAndPassword(authData.email, authData.pass)
+              .then(loginRes => {
+                console.log("authUser res", loginRes);
+                //   loginRes.user
+                //     .getIdTokenResult()
+                //     .then(tokenRes => {
+                //       console.log("authUser res", tokenRes);
+                //       const token = tokenRes.token;
+                //       const expirationTime = new Date(
+                //         tokenRes.expirationTime
+                //       ).getTime();
 
-            vuexContext.commit('setToken', token)
-            localStorage.setItem('token', token)
-            localStorage.setItem('tokenExpiration', expiration)
-            Cookie.set('token', token)
-            Cookie.set('tokenExpiration', expiration)
+                //       vuexContext.commit("setToken", token);
+                //       Cookie.set("token", token);
+                //       Cookie.set("tokenExpiration", expirationTime);
+                //     })
+                //     .catch(e => console.error(e));
+              })
+              .catch(e => console.error(e));
           })
-          .catch(e => console.error(e))
+          .catch(e => {
+            console.error(e);
+          });
+        // return firebase
+        //   .auth()
+        //   .signInWithEmailAndPassword(authData.email, authData.pass)
+        //   .then(loginRes => {
+        //     console.log("authUser res", loginRes);
+        //     loginRes.user
+        //       .getIdTokenResult()
+        //       .then(tokenRes => {
+        //         console.log("authUser res", tokenRes);
+        //         const token = tokenRes.token;
+        //         const expirationTime = new Date(
+        //           tokenRes.expirationTime
+        //         ).getTime();
+
+        //         vuexContext.commit("setToken", token);
+        //         Cookie.set("token", token);
+        //         Cookie.set("tokenExpiration", expirationTime);
+        //       })
+        //       .catch(e => console.error(e));
+        //   })
+        //   .catch(e => console.error(e));
       },
-      initAuth (vuexContext, req) {
-        let token, tokenExpiration = null
+      initAuth(vuexContext, req) {
+        console.log("initAuth");
+        let token,
+          tokenExpiration = null;
         if (!process.client && req && req.headers.cookie) {
-          // server only
-          token = req.headers.cookie
-            .split(';')
-            .find(c => {
-                if (c.trim().startsWith('token=')) {
-                  return c.split('=')[1]
-                }
-              }
-            )
-          tokenExpiration = req.headers.cookie
-            .split(';')
-            .find(c => {
-                if (c.trim().startsWith('tokenExpiration=')) {
-                  return c.split('=')[1]
-                }
-              }
-            )
+          // only server
+          token = req.headers.cookie.split(";").find(c => {
+            if (c.trim().startsWith("token=")) {
+              return c.split("=")[1];
+            }
+          });
+          tokenExpiration = req.headers.cookie.split(";").find(c => {
+            if (c.trim().startsWith("tokenExpiration=")) {
+              return c.split("=")[1];
+            }
+          });
         } else if (process.client) {
-          // client only
-          token = localStorage.getItem('token')
-          tokenExpiration = localStorage.getItem('tokenExpiration')
+          // only client
+          token = Cookie.get("token");
+          tokenExpiration = Cookie.get("tokenExpiration");
         }
+        console.log("token", token);
+        console.log("tokenExpiration", tokenExpiration);
         if (token && new Date().getTime() < Number(tokenExpiration)) {
+          console.log("token found", token);
           // load token if exists
-          vuexContext.commit('setToken', token)
+          firebase
+            .auth()
+            .vera
+            .then(res => {
+              console.log("initAuth signInWithCustomToken", res);
+              vuexContext.commit("setToken", token);
+            })
+            .catch(e => {
+              console.error(e);
+              // vuexContext.dispatch("logout");
+            });
         } else {
           // clear if undefined or expired token
-          vuexContext.dispatch('logout')
+          // vuexContext.dispatch("logout");
         }
       },
-      logout (vuexContext) {
-        vuexContext.commit('clearToken')
-        Cookie.remove('token')
-        Cookie.remove('tokenExpiration')
-        if (process.client) {
-          // server only
-          localStorage.removeItem('token')
-          localStorage.removeItem('tokenExpiration')
-        }
+      logout(vuexContext) {
+        vuexContext.commit("clearToken");
+        Cookie.remove("token");
+        Cookie.remove("tokenExpiration");
+        // firebase.auth().signOut()
+        // .catch(e => {
+        //   console.error(e)
+        // })
       }
     }
-  })
-}
+  });
+};
 
-export default createStore
+export default createStore;
