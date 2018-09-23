@@ -35,7 +35,7 @@ const createStore = () => {
         state.loadedPosts.splice(iPost, 1);
       },
       setToken(state, token) {
-        console.log("setToken", token);
+        // // console.log("setToken", token);
         state.token = token;
       },
       clearToken(state) {
@@ -103,17 +103,17 @@ const createStore = () => {
           });
       },
       authUser(vuexContext, authData) {
-        console.log("authUser", authData);
+        // console.log("authUser", authData);
         // Login
         return firebase
           .auth()
           .signInWithEmailAndPassword(authData.email, authData.pass)
           .then(loginRes => {
-            console.log("authUser res", loginRes);
+            // console.log("authUser res", loginRes);
             loginRes.user
               .getIdTokenResult()
               .then(tokenRes => {
-                console.log("authUser res", tokenRes);
+                // console.log("authUser res", tokenRes);
                 const token = tokenRes.token;
                 const expirationTime = new Date(
                   tokenRes.expirationTime
@@ -128,7 +128,7 @@ const createStore = () => {
           .catch(e => console.error(e));
       },
       initAuth(vuexContext, req) {
-        console.log("initAuth");
+        // console.log("initAuth");
         let token,
           tokenExpiration = null;
         if (!process.client && req && req.headers.cookie) {
@@ -148,10 +148,10 @@ const createStore = () => {
           token = Cookie.get("token");
           tokenExpiration = Cookie.get("tokenExpiration");
         }
-        console.log("token", token);
-        console.log("tokenExpiration", tokenExpiration);
+        // console.log("token", token);
+        // console.log("tokenExpiration", tokenExpiration);
         if (token && new Date().getTime() < Number(tokenExpiration)) {
-          console.log("token found", token);
+          // console.log("token found", token);
           // load token if exists
           vuexContext.commit("setToken", token);
         } else {
