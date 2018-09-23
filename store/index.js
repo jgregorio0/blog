@@ -105,58 +105,27 @@ const createStore = () => {
       authUser(vuexContext, authData) {
         console.log("authUser", authData);
         // Login
-        firebase
+        return firebase
           .auth()
-          .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-          .then(() => {
-            console.log("set persistence to session");
+          .signInWithEmailAndPassword(authData.email, authData.pass)
+          .then(loginRes => {
+            console.log("authUser res", loginRes);
+            loginRes.user
+              .getIdTokenResult()
+              .then(tokenRes => {
+                console.log("authUser res", tokenRes);
+                const token = tokenRes.token;
+                const expirationTime = new Date(
+                  tokenRes.expirationTime
+                ).getTime();
 
-            return firebase
-              .auth()
-              .signInWithEmailAndPassword(authData.email, authData.pass)
-              .then(loginRes => {
-                console.log("authUser res", loginRes);
-                //   loginRes.user
-                //     .getIdTokenResult()
-                //     .then(tokenRes => {
-                //       console.log("authUser res", tokenRes);
-                //       const token = tokenRes.token;
-                //       const expirationTime = new Date(
-                //         tokenRes.expirationTime
-                //       ).getTime();
-
-                //       vuexContext.commit("setToken", token);
-                //       Cookie.set("token", token);
-                //       Cookie.set("tokenExpiration", expirationTime);
-                //     })
-                //     .catch(e => console.error(e));
+                vuexContext.commit("setToken", token);
+                Cookie.set("token", token);
+                Cookie.set("tokenExpiration", expirationTime);
               })
               .catch(e => console.error(e));
           })
-          .catch(e => {
-            console.error(e);
-          });
-        // return firebase
-        //   .auth()
-        //   .signInWithEmailAndPassword(authData.email, authData.pass)
-        //   .then(loginRes => {
-        //     console.log("authUser res", loginRes);
-        //     loginRes.user
-        //       .getIdTokenResult()
-        //       .then(tokenRes => {
-        //         console.log("authUser res", tokenRes);
-        //         const token = tokenRes.token;
-        //         const expirationTime = new Date(
-        //           tokenRes.expirationTime
-        //         ).getTime();
-
-        //         vuexContext.commit("setToken", token);
-        //         Cookie.set("token", token);
-        //         Cookie.set("tokenExpiration", expirationTime);
-        //       })
-        //       .catch(e => console.error(e));
-        //   })
-        //   .catch(e => console.error(e));
+          .catch(e => console.error(e));
       },
       initAuth(vuexContext, req) {
         console.log("initAuth");
@@ -184,30 +153,16 @@ const createStore = () => {
         if (token && new Date().getTime() < Number(tokenExpiration)) {
           console.log("token found", token);
           // load token if exists
-          firebase
-            .auth()
-            .vera
-            .then(res => {
-              console.log("initAuth signInWithCustomToken", res);
-              vuexContext.commit("setToken", token);
-            })
-            .catch(e => {
-              console.error(e);
-              // vuexContext.dispatch("logout");
-            });
+          vuexContext.commit("setToken", token);
         } else {
           // clear if undefined or expired token
-          // vuexContext.dispatch("logout");
+          vuexContext.dispatch("logout");
         }
       },
       logout(vuexContext) {
         vuexContext.commit("clearToken");
         Cookie.remove("token");
         Cookie.remove("tokenExpiration");
-        // firebase.auth().signOut()
-        // .catch(e => {
-        //   console.error(e)
-        // })
       }
     }
   });
