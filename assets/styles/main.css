@@ -4,3 +4,23 @@
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+
+/*header and sidenav*/
+
+@media (max-width: 768px) {
+  .header-items {
+    display: none!important;
+  }
+}
+
+#nav_collapse {
+    text-align: center;
+    width: 90px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 56px; /* Stay at the top */
+    left: 0;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding: 20px 0px 20px;
+}
+

@@ -44,7 +44,27 @@ const createStore = () => {
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
-        return axios
+        //  console.log("nuxtServerInit");
+         return new Promise((resolve, reject)=>{
+          firebase
+            .database()
+            .ref("posts")
+            .orderByChild("updatedDate")
+            .on("value", snapshot => {
+              // get list from firebase
+              // console.log("snapshot", snapshot);
+              let data = snapshot.val();
+              const postsArray = [];
+              for (let key in data) {
+                postsArray.push({ ...data[key], id: key });
+              }
+              vuexContext.commit("setPosts", postsArray);
+              resolve()
+            });
+         })
+
+           // AXIOS
+        /* return axios
           .get(process.env.firebaseUrl + "/posts.json")
           .then(res => {
             const postsArray = [];
@@ -55,7 +75,7 @@ const createStore = () => {
           })
           .catch(e => {
             console.error(e);
-          });
+          }); */
       },
       setPosts(vuexContext, posts) {
         vuexContext.commit("setPosts", posts);
@@ -93,7 +113,7 @@ const createStore = () => {
           .ref("posts/" + postId)
           .set(null)
           .then(res => {
-            vuexContext.commit("addPost", {
+            vuexContext.commit("rmPost", {
               ...post,
               id: res.data.name
             });

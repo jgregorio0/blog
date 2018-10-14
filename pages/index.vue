@@ -1,7 +1,7 @@
 <template>
   <div class="home-page">
     <section class="intro">
-      <h1>Get the latest tech news!</h1>
+      <h1>Latest docs!</h1>
     </section>
     <PostList :posts="loadedPosts"></PostList>
   </div>

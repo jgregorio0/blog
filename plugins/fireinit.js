@@ -8,7 +8,6 @@ if (!firebaseConfig) {
 }
 
 export default function({ store, redirect }) {
-  console.log('firebase init')
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }

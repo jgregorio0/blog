@@ -1,29 +1,16 @@
 <template>
 <div class="header-container">
-  <header class="the-header">
-    <TheSideNavToggle @toggle="$emit('sidenavToggle')" />
-    <div class="logo">
-      <nuxt-link to="/">WD BLOG</nuxt-link>
-    </div>
-    <div class="spacer"></div>
-    <div class="navigation-items">
-      <ul class="nav-list">
-        <li class="nav-item"><nuxt-link to="/posts">Blog</nuxt-link></li>
-        <li class="nav-item"><nuxt-link to="/about">About</nuxt-link></li>
-        <li class="nav-item"><nuxt-link to="/admin">Admin</nuxt-link></li>
-      </ul>
-    </div>
-  </header>
+<b-navbar toggleable="md" type="dark" variant="info">
+
+  <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+
+  <b-navbar-brand to="/">BLOG</b-navbar-brand>
+
+  <b-navbar-nav class="header-items">
+      <b-nav-item to="posts">Posts</b-nav-item>
+      <b-nav-item to="about">About</b-nav-item>
+      <b-nav-item to="admin">Admin</b-nav-item>
+    </b-navbar-nav>
+</b-navbar>
 </div>
 </template>
-
-<script>
-import TheSideNavToggle from "@/components/Navigation/TheSideNavToggle";
-
-export default {
-  name: "TheHeader",
-  components: {
-    TheSideNavToggle
-  }
-};
-</script>
