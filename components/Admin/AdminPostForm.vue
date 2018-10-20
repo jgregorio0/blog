@@ -1,13 +1,31 @@
 <template>
   <form @submit.prevent="onSave">
-    <AppControlInput v-model="editedPost.title">Title</AppControlInput>
+    <!-- TITLE -->
+    <b-form-group id="titleGroup"
+                    label="Title:"
+                    label-for="title">
+        <b-form-input id="title"
+                      type="text"
+                      v-model="editedPost.title"
+                      required
+                      placeholder="Enter title">
+        </b-form-input>
+      </b-form-group>
     <div class="row">
       <div class="col-6">
-        <AppControlInput
-          control-type="textarea"
-          v-model="editedPost.content">Markdown Content
-        </AppControlInput>
+        <!-- CONTENT -->
+        <b-form-group id="contentGroup"
+                    label="Content:"
+                    label-for="content">
+          <b-form-textarea id="content"
+                      v-model="editedPost.content"
+                      placeholder="Enter markdown content"
+                      :rows="10"
+                      :max-rows="30">
+          </b-form-textarea>
+        </b-form-group>
       </div>
+      <!-- CONTENT SHOW -->
       <div class="col-6" v-html="contentHTML"></div>
     </div>
     <input type="hidden" :value="editedPost.updatedDate">

@@ -1,5 +1,5 @@
 import Vuex from "vuex";
-import axios from "axios";
+// import axios from "axios";
 import Cookie from "js-cookie";
 import firebase from "firebase";
 

@@ -5,14 +5,14 @@
   "author": "jgregorio",
   "private": true,
   "dependencies": {
-    "@nuxtjs/pwa": "^2.6.0",
     "axios": "^0.18.0",
     "bootstrap-vue": "^2.0.0-rc.11",
     "firebase": "^5.5.4",
     "js-cookie": "^2.2.0",
-    "nuxt": "^2.2.0",
     "showdown": "^1.8.6",
-    "tocbot": "^4.4.0"
+    "tocbot": "^4.4.0",
+    "nuxt": "^2.2.0",
+    "@nuxtjs/pwa": "^2.6.0"
   },
   "config": {
     "nuxt": {
