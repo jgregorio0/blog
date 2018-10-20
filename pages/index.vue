@@ -1,8 +1,6 @@
 <template>
   <div class="home-page">
-    <section class="intro">
-      <h1>Latest docs!</h1>
-    </section>
+    <h1>Latest Posts</h1>
     <PostList :posts="loadedPosts"></PostList>
   </div>
 </template>

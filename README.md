@@ -1,9 +1,10 @@
-# BLOG
+## BLOG
 
 > Blog con Nuxt y MarkDown
 
-## Setup
-### Host y Puerto
+# Setup
+
+## Host y Puerto
 
 - /package.json
 
@@ -37,28 +38,30 @@ $ npm run generate
 
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
 
-## Comandos
-echo "*********CONFIG NODE_MODULES*********"
-   mkdir /home/vagrant/node_modules
-   ln -s /home/vagrant/node_modules /home/vagrant/project/node_modules
+# Comandos
 
-   echo "*********INSTALL NVM && NODEJS && NPM*********"
-   TODO change to user vagrant??
-  cd /home/vagrant
-  git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
-  echo "source ~/.nvm/nvm.sh" >> ~/.profile
-  source ~/.profile
-  nvm install 8.12
-  nvm alias default 8.12
-  node -v
-  npm -v
+echo "****\*****CONFIG NODE_MODULES****\*****"
+mkdir /home/vagrant/node_modules
+ln -s /home/vagrant/node_modules /home/vagrant/project/node_modules
 
-  echo "*********INSTALL VUE CLI*********"
-  npm install -g vue-cli
+echo "****\*****INSTALL NVM && NODEJS && NPM****\*****"
+TODO change to user vagrant??
+cd /home/vagrant
+git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
+echo "source ~/.nvm/nvm.sh" >> ~/.profile
+source ~/.profile
+nvm install 8.12
+nvm alias default 8.12
+node -v
+npm -v
 
-  echo "*********INSTALL PROJECT*********"
-  cd /home/vagrant/project
-  npm install
+echo "****\*****INSTALL VUE CLI****\*****"
+npm install -g vue-cli
+
+echo "****\*****INSTALL PROJECT****\*****"
+cd /home/vagrant/project
+npm install
+
 1. Forzar cambios en los componentes .vue
 
 ```
@@ -74,7 +77,7 @@ npm cache clean --force
 npm i
 ```
 
-## Obtener listado posts
+# Obtener listado posts
 
 ```
 nuxtServerInit(vuexContext, context) {
@@ -92,7 +95,7 @@ nuxtServerInit(vuexContext, context) {
 }
 ```
 
-## Acceder detalle post
+# Acceder detalle post
 
 ```
 asyncData(context) {
@@ -109,7 +112,7 @@ asyncData(context) {
 }
 ```
 
-## Anadir post
+# Anadir post
 
 ```
 addPost (vuexContext, post) {
@@ -123,7 +126,7 @@ addPost (vuexContext, post) {
       },
 ```
 
-## Actualizar post
+# Actualizar post
 
 ```
 editPost (vuexContext, editedPost) {
@@ -137,7 +140,7 @@ editPost (vuexContext, editedPost) {
       },
 ```
 
-## Eliminar post
+# Eliminar post
 
 ```
 rmPost (vuexContext, postId) {
@@ -151,11 +154,13 @@ rmPost (vuexContext, postId) {
       },
 ```
 
-## Env
+# Env
+
 Permite inyectar variables al contexto de la aplicación
 
 - firebase.env
-Crear fichero con datos de entorno firebase
+  Crear fichero con datos de entorno firebase
+
 ```
 module.exports = {
     apiKey: "API",
@@ -165,11 +170,10 @@ module.exports = {
     storageBucket: "store",
     messagingSenderId: "msg"
   }
-
 ```
 
 - nuxt.config.js
-El fichero de configuracion de nuxt esta preparado para obtener estos parametros del entorno
+  El fichero de configuracion de nuxt esta preparado para obtener estos parametros del entorno
 
 ```
 env: {
@@ -177,7 +181,8 @@ env: {
 }
 ```
 
-## Firebase Configuracion
+# Firebase Configuracion
+
 1. Crear base de datos `Realtime Database` con los siguientes permisos:
 
 ```
@@ -192,10 +197,71 @@ env: {
 
 2. Configurar autorizacion con correo electronico y anadir usuario administrador desde la consola de firebase.
 
-## Desplegar en Github Pages
+# Desplegar en Github Pages
+
 - Documentacion Nuxt: https://nuxtjs.org/faq/github-pages/
 
 ```
 npm run generate
 npm run deploy
+```
+
+# Font awesome
+
+1. Incluir dependencia del módulo font-awesome por encima de nuxt
+
+```
+"dependencies": {
+"@fortawesome/free-solid-svg-icons": "^5.3.1",
+"nuxt-fontawesome": "^0.3.0",
+"nuxt": "latest"
+},
+```
+
+En caso de que build falle añadir:
+
+- "@fortawesome/fontawesome-svg-core": "^1.2.4",
+- "@fortawesome/vue-fontawesome": "^0.1.1",
+
+2. Anadirlo al fichero nuxt.config.js
+3. Se puede importar el conjunto completo o solo unos iconos
+
+```
+  /*
+  ** Modules
+  */
+  modules: ["nuxt-fontawesome"],
+  /*
+  ** fontawesome
+  */
+  fontawesome: {
+    component: "fa",
+    imports: [
+      {
+        set: "@fortawesome/free-solid-svg-icons",
+        icons: ["faExternalLinkAlt"]
+      }
+    ]
+  },
+```
+
+4. Para utilizarlo
+
+```
+<template>
+<div>
+  <fa :icon="faExternalLinkAlt" />
+</div>
+</template>
+
+<script>
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+export default {
+  computed: {
+      faExternalLinkAlt() {
+        return faExternalLinkAlt;
+      }
+    }
+}
+</script>
 ```

@@ -1,26 +1,25 @@
 <template>
-  <div class="post-preview">
+  <b-card class="post-preview">
+      <div slot="header" >
+        <span>{{title}}</span>
+        <nuxt-link title="Go to detail" class="float-right" 
+          :to="$route.path.includes('/admin') ?  '/admin/' + id : '/posts/' + id">
+          <fa :icon="faExternalLinkAlt" />
+        </nuxt-link>
+      </div>
     <button type="button" class="close" aria-label="Close"
             v-if="$route.path.includes('/admin/remove-post')"
             @click="$emit('rmPost', id)">
       <span aria-hidden="true">&times;</span>
     </button>
-      <article>
-        <nuxt-link :to="$route.path.includes('/admin') ?  '/admin/' + id : '/posts/' + id">
-          <div class="post-title">
-            <h1>{{ title }}</h1>
-          </div>
-        </nuxt-link>
-          <div class="post-content" v-html="contentHTML">
-            
-        </div>
-      </article>
-  </div>
+    <p class="card-text post-content" v-html="contentHTML"></p>
+  </b-card>
 </template>
 
 <script>
 import showdown from "showdown";
 import tocbot from "tocbot";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default {
   name: "PostPreview",
@@ -42,6 +41,9 @@ export default {
     contentHTML() {
       let converter = new showdown.Converter();
       return converter.makeHtml(this.content);
+    },
+    faExternalLinkAlt() {
+      return faExternalLinkAlt;
     }
   }
 };

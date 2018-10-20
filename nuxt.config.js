@@ -24,7 +24,19 @@ module.exports = {
   /*
   ** Modules
   */
-  modules: ["@nuxtjs/pwa", "bootstrap-vue/nuxt"],
+  modules: ["@nuxtjs/pwa", "bootstrap-vue/nuxt", "nuxt-fontawesome"],
+  /*
+  ** fontawesome
+  */
+  fontawesome: {
+    component: "fa",
+    imports: [
+      {
+        set: "@fortawesome/free-solid-svg-icons",
+        icons: ["faExternalLinkAlt"]
+      }
+    ]
+  },
   /*
   ** Global CSS
   */
