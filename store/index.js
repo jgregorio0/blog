@@ -60,9 +60,6 @@ const createStore = () => {
               vuexContext.commit("setPosts", postsArray);
               resolve();
             })
-            .on("child_added", snapshot => {
-              console.log('child added', snapshot)
-            });
         });
 
         // AXIOS
