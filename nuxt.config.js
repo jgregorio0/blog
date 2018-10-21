@@ -33,7 +33,15 @@ module.exports = {
     imports: [
       {
         set: "@fortawesome/free-solid-svg-icons",
-        icons: ["faExternalLinkAlt"]
+        icons: [
+          "faExternalLinkAlt",
+          "faPencilAlt",
+          "faTimes",
+          "faSignOutAlt",
+          "faPlusSquare",
+          "faSave",
+          "faBan"
+        ]
       }
     ]
   },

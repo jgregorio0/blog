@@ -1,5 +1,17 @@
 <template>
   <form @submit.prevent="onSave">
+    <!-- SAVE OR CANCEL -->
+    <b-button-group class="mb-5">
+      <b-button type="submit" variant="success">
+        <fa :icon="faSave"/>
+        <span class="ml-1">Save</span>
+        </b-button>
+      <b-button type="button" variant="danger" @click="onCancel">
+        <fa :icon="faBan"/>
+        <span class="ml-1">Cancel</span>
+      </b-button>
+    </b-button-group>
+    
     <!-- TITLE -->
     <b-form-group id="titleGroup"
                     label="Title:"
@@ -28,19 +40,13 @@
       <!-- CONTENT SHOW -->
       <div class="col-6" v-html="contentHTML"></div>
     </div>
-    <input type="hidden" :value="editedPost.updatedDate">
-    <AppButton type="submit">Save</AppButton>
-    <AppButton
-      type="button"
-      style="margin-left: 10px"
-      btn-style="cancel"
-      @click="onCancel">Cancel
-    </AppButton>
+    <input type="hidden" :value="updatedDate">
   </form>
 </template>
 
 <script>
 import showdown from "showdown";
+import { faSave, faBan } from "@fortawesome/free-solid-svg-icons";
 
 export default {
   props: {
@@ -52,11 +58,14 @@ export default {
   data() {
     return {
       editedPost: this.post
-        ? { ...this.post }
+        ? {
+            ...this.post,
+            updatedDate: new Date().toISOString()
+          }
         : {
             title: "",
             content: "",
-            updatedDate: new Date()
+            updatedDate: new Date().toISOString()
           }
     };
   },
@@ -72,6 +81,12 @@ export default {
     contentHTML() {
       let converter = new showdown.Converter();
       return converter.makeHtml(this.editedPost.content);
+    },
+    faSave() {
+      return faSave;
+    },
+    faBan() {
+      return faBan;
     }
   }
 };

@@ -35,7 +35,7 @@ const createStore = () => {
         state.loadedPosts.splice(iPost, 1);
       },
       setToken(state, token) {
-        // // console.log("setToken", token);
+        // console.log("setToken", token);
         state.token = token;
       },
       clearToken(state) {
@@ -45,25 +45,27 @@ const createStore = () => {
     actions: {
       nuxtServerInit(vuexContext, context) {
         //  console.log("nuxtServerInit");
-         return new Promise((resolve, reject)=>{
+        return new Promise((resolve, reject) => {
           firebase
             .database()
             .ref("posts")
             .orderByChild("updatedDate")
             .on("value", snapshot => {
-              // get list from firebase
-              // console.log("snapshot", snapshot);
               let data = snapshot.val();
               const postsArray = [];
               for (let key in data) {
                 postsArray.push({ ...data[key], id: key });
               }
+              // console.log("postsArray", postsArray);
               vuexContext.commit("setPosts", postsArray);
-              resolve()
+              resolve();
+            })
+            .on("child_added", snapshot => {
+              console.log('child added', snapshot)
             });
-         })
+        });
 
-           // AXIOS
+        // AXIOS
         /* return axios
           .get(process.env.firebaseUrl + "/posts.json")
           .then(res => {
@@ -86,7 +88,11 @@ const createStore = () => {
           .ref("posts")
           .push(post)
           .then(res => {
-            vuexContext.commit("addPost", { ...post, id: res.data.name });
+            let key = res.key
+            if (!key) {
+              throw new Error('addPost key response is empty: ' + key)
+            }
+            vuexContext.commit("addPost", { ...post, id: res.key });
           })
           .catch(e => {
             console.error(e);
@@ -97,10 +103,9 @@ const createStore = () => {
           .database()
           .ref("posts/" + editedPost.id)
           .set(editedPost)
-          .then(res => {
-            vuexContext.commit("addPost", {
-              ...post,
-              id: res.data.name
+          .then(() => {
+            vuexContext.commit("editPost", {
+              ...editedPost
             });
           })
           .catch(e => {
@@ -108,15 +113,13 @@ const createStore = () => {
           });
       },
       rmPost(vuexContext, postId) {
+        // console.log("rmPost")
         return firebase
           .database()
           .ref("posts/" + postId)
           .set(null)
           .then(res => {
-            vuexContext.commit("rmPost", {
-              ...post,
-              id: res.data.name
-            });
+            vuexContext.commit("rmPost", postId);
           })
           .catch(e => {
             console.error(e);
