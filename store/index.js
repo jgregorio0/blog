@@ -1,5 +1,5 @@
 import Vuex from "vuex";
-// import axios from "axios";
+import axios from "axios";
 import Cookie from "js-cookie";
 import firebase from "firebase";
 
@@ -45,12 +45,12 @@ const createStore = () => {
     actions: {
       nuxtServerInit(vuexContext, context) {
         //  console.log("nuxtServerInit");
-        return new Promise((resolve, reject) => {
+        /* return new Promise((resolve, reject) => {
           firebase
             .database()
             .ref("posts")
             .orderByChild("updatedDate")
-            .on("value", snapshot => {
+            .once("value", snapshot => {
               let data = snapshot.val();
               const postsArray = [];
               for (let key in data) {
@@ -60,10 +60,10 @@ const createStore = () => {
               vuexContext.commit("setPosts", postsArray);
               resolve();
             })
-        });
+        }); */
 
         // AXIOS
-        /* return axios
+        return axios
           .get(process.env.firebaseUrl + "/posts.json")
           .then(res => {
             const postsArray = [];
@@ -74,7 +74,7 @@ const createStore = () => {
           })
           .catch(e => {
             console.error(e);
-          }); */
+          });
       },
       setPosts(vuexContext, posts) {
         vuexContext.commit("setPosts", posts);

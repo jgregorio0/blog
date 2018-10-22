@@ -11,6 +11,10 @@
   .header-items {
     display: none!important;
   }
+
+  #navbar-brand {
+    margin-left: auto !important;
+  }
 }
 
 #nav_collapse {

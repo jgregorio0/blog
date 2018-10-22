@@ -4,7 +4,7 @@
 
   <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-  <b-navbar-brand to="/">BLOG</b-navbar-brand>
+  <b-navbar-brand to="/" id="navbar-brand">BLOG</b-navbar-brand>
 
   <b-navbar-nav class="header-items">
     <b-nav-item :to="{name: 'posts'}">Posts</b-nav-item>

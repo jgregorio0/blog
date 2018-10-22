@@ -1,6 +1,6 @@
 <template>
 <b-navbar>
-  <b-collapse is-nav id="nav_collapse" class="sidenav bg-info">
+  <b-collapse is-nav id="nav_collapse" class="sidenav bg-info navbar-dark">
     <b-navbar-nav>
       <b-nav-item :to="{name: 'posts'}">Posts</b-nav-item>
       <b-nav-item :to="{name: 'about'}">About</b-nav-item>
