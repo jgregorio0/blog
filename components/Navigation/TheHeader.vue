@@ -15,7 +15,7 @@
   <b-navbar-nav v-if="this.$store.getters.isAuthenticated" class="ml-auto">
     <b-nav-form >
         <b-button type="button" class="mr-1" size="sm" variant="success"
-          @click="logout">
+              @click="goToNewPost">
           <fa :icon="faPlusSquare"/>
           <span class="ml-1">New Post</span>
         </b-button>
@@ -37,6 +37,9 @@ export default {
     logout() {
       this.$store.dispatch("logout");
       this.$router.push("/");
+    },
+    goToNewPost () {
+      this.$router.push("/admin/new-post");
     }
   },
   computed: {

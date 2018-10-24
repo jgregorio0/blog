@@ -2,6 +2,7 @@ const axios = require("axios");
 const firebaseEnv = require("./firebase.env");
 
 module.exports = {
+  mode: "universal",
   /*
   ** Build configuration
   */

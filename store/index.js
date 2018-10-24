@@ -14,6 +14,7 @@ const createStore = () => {
         return state.loadedPosts;
       },
       isAuthenticated(state) {
+        console.log("isAuthenticated");
         return state.token != null;
       }
     },
@@ -85,9 +86,9 @@ const createStore = () => {
           .ref("posts")
           .push(post)
           .then(res => {
-            let key = res.key
+            let key = res.key;
             if (!key) {
-              throw new Error('addPost key response is empty: ' + key)
+              throw new Error("addPost key response is empty: " + key);
             }
             vuexContext.commit("addPost", { ...post, id: res.key });
           })
@@ -123,7 +124,7 @@ const createStore = () => {
           });
       },
       authUser(vuexContext, authData) {
-        // console.log("authUser", authData);
+        console.log("authUser");
         // Login
         return firebase
           .auth()
@@ -148,28 +149,31 @@ const createStore = () => {
           .catch(e => console.error(e));
       },
       initAuth(vuexContext, req) {
-        // console.log("initAuth");
+        console.log("initAuth");
         let token,
           tokenExpiration = null;
         if (!process.client && req && req.headers.cookie) {
           // only server
-          token = req.headers.cookie.split(";").find(c => {
+          console.log("only server");
+          req.headers.cookie.split(";").find(c => {
             if (c.trim().startsWith("token=")) {
-              return c.split("=")[1];
+              token = c.split("=")[1];
             }
           });
-          tokenExpiration = req.headers.cookie.split(";").find(c => {
+          req.headers.cookie.split(";").find(c => {
             if (c.trim().startsWith("tokenExpiration=")) {
-              return c.split("=")[1];
+              tokenExpiration = c.split("=")[1];
             }
           });
         } else if (process.client) {
           // only client
+          console.log("only client")
           token = Cookie.get("token");
           tokenExpiration = Cookie.get("tokenExpiration");
         }
-        // console.log("token", token);
-        // console.log("tokenExpiration", tokenExpiration);
+        console.log("token", token);
+        console.log("tokenExpiration", tokenExpiration);
+        console.log("now is less than expiration?", new Date().getTime(), Number(tokenExpiration));
         if (token && new Date().getTime() < Number(tokenExpiration)) {
           // console.log("token found", token);
           // load token if exists
@@ -180,6 +184,7 @@ const createStore = () => {
         }
       },
       logout(vuexContext) {
+        console.log("logout");
         vuexContext.commit("clearToken");
         Cookie.remove("token");
         Cookie.remove("tokenExpiration");
