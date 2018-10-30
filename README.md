@@ -183,6 +183,11 @@ env: {
 
 # Firebase Configuracion
 
+## Realtime database
+
+* [firebase init service: https://hackernoon.com/vue-nuxt-firebase-auth-database-ssr-example-tutorial-facebook-login-setup-authentication-starter-app-a6dfde0133fc] (https://hackernoon.com/vue-nuxt-firebase-auth-database-ssr-example-tutorial-facebook-login-setup-authentication-starter-app-a6dfde0133fc)
+* [cloud firestore: https://savvyapps.com/blog/definitive-guide-building-web-app-vuejs-firebase] (https://savvyapps.com/blog/definitive-guide-building-web-app-vuejs-firebase)
+
 1. Crear base de datos `Realtime Database` con los siguientes permisos:
 
 ```
@@ -196,6 +201,19 @@ env: {
 ```
 
 2. Configurar autorizacion con correo electronico y anadir usuario administrador desde la consola de firebase.
+
+## Cloud firestore
+1. Configurar permisos
+```
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /posts/{post} {
+      allow read: if true
+      allow write: if request.auth.uid != null;
+    }
+  }
+}
+```
 
 # Desplegar en Github Pages
 

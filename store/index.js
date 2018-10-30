@@ -1,7 +1,8 @@
 import Vuex from "vuex";
 import axios from "axios";
 import Cookie from "js-cookie";
-import firebase from "firebase";
+//import firebase from "firebase";
+import fb from "~/services/fireinit.js";
 
 const createStore = () => {
   return new Vuex.Store({
@@ -14,12 +15,13 @@ const createStore = () => {
         return state.loadedPosts;
       },
       isAuthenticated(state) {
-        console.log("isAuthenticated");
+        // console.log("isAuthenticated");
         return state.token != null;
       }
     },
     mutations: {
       setPosts(state, posts) {
+        // console.log("setPosts", posts);
         state.loadedPosts = posts;
       },
       addPost(state, post) {
@@ -45,6 +47,19 @@ const createStore = () => {
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
+        return new Promise((resolve, reject) => {
+          fb.posts.orderBy("updatedDate", "desc").onSnapshot(querySnapshot => {
+            let postsArray = [];
+            querySnapshot.forEach(doc => {
+              let post = doc.data();
+              post.id = doc.id;
+              postsArray.push(post);
+            });
+            vuexContext.commit("setPosts", postsArray);
+            resolve();
+          });
+        });
+
         //  console.log("nuxtServerInit");
         /* return new Promise((resolve, reject) => {
           firebase
@@ -64,7 +79,7 @@ const createStore = () => {
         }); */
 
         // AXIOS
-        return axios
+        /*return axios
           .get(process.env.firebaseUrl + "/posts.json")
           .then(res => {
             const postsArray = [];
@@ -75,13 +90,23 @@ const createStore = () => {
           })
           .catch(e => {
             console.error(e);
-          });
+          });*/
       },
       setPosts(vuexContext, posts) {
         vuexContext.commit("setPosts", posts);
       },
       addPost(vuexContext, post) {
-        return firebase
+        // console.log("addPost", post);
+        return fb.posts
+          .add(post)
+          .then(ref => {
+            // console.log("ref", ref);
+            vuexContext.commit("addPost", { ...post, id: ref.id });
+          })
+          .catch(e => {
+            console.error(e);
+          });
+        /* return firebase
           .database()
           .ref("posts")
           .push(post)
@@ -94,10 +119,21 @@ const createStore = () => {
           })
           .catch(e => {
             console.error(e);
-          });
+          }); */
       },
       editPost(vuexContext, editedPost) {
-        return firebase
+        return fb.posts
+          .doc(editedPost.id)
+          .set({
+            editedPost
+          })
+          .then(() => {
+            vuexContext.commit("editPost", editedPost);
+          })
+          .catch(e => {
+            console.error(e);
+          });
+        /* return firebase
           .database()
           .ref("posts/" + editedPost.id)
           .set(editedPost)
@@ -108,11 +144,20 @@ const createStore = () => {
           })
           .catch(e => {
             console.error(e);
-          });
+          }); */
       },
       rmPost(vuexContext, postId) {
         // console.log("rmPost")
-        return firebase
+        return fb.posts
+          .doc(postId)
+          .delete()
+          .then(() => {
+            vuexContext.commit("rmPost", postId);
+          })
+          .catch(e => {
+            console.error(e);
+          });
+        /* return firebase
           .database()
           .ref("posts/" + postId)
           .set(null)
@@ -121,13 +166,12 @@ const createStore = () => {
           })
           .catch(e => {
             console.error(e);
-          });
+          }); */
       },
       authUser(vuexContext, authData) {
-        console.log("authUser");
+        // console.log("authUser");
         // Login
-        return firebase
-          .auth()
+        return fb.auth
           .signInWithEmailAndPassword(authData.email, authData.pass)
           .then(loginRes => {
             // console.log("authUser res", loginRes);
@@ -149,12 +193,12 @@ const createStore = () => {
           .catch(e => console.error(e));
       },
       initAuth(vuexContext, req) {
-        console.log("initAuth");
+        // console.log("initAuth");
         let token,
           tokenExpiration = null;
         if (!process.client && req && req.headers.cookie) {
           // only server
-          console.log("only server");
+          // console.log("only server");
           req.headers.cookie.split(";").find(c => {
             if (c.trim().startsWith("token=")) {
               token = c.split("=")[1];
@@ -167,13 +211,10 @@ const createStore = () => {
           });
         } else if (process.client) {
           // only client
-          console.log("only client")
+          // console.log("only client");
           token = Cookie.get("token");
           tokenExpiration = Cookie.get("tokenExpiration");
         }
-        console.log("token", token);
-        console.log("tokenExpiration", tokenExpiration);
-        console.log("now is less than expiration?", new Date().getTime(), Number(tokenExpiration));
         if (token && new Date().getTime() < Number(tokenExpiration)) {
           // console.log("token found", token);
           // load token if exists
@@ -184,7 +225,7 @@ const createStore = () => {
         }
       },
       logout(vuexContext) {
-        console.log("logout");
+        // console.log("logout");
         vuexContext.commit("clearToken");
         Cookie.remove("token");
         Cookie.remove("tokenExpiration");
