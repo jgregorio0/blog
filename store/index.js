@@ -124,9 +124,7 @@ const createStore = () => {
       editPost(vuexContext, editedPost) {
         return fb.posts
           .doc(editedPost.id)
-          .set({
-            editedPost
-          })
+          .set(editedPost)
           .then(() => {
             vuexContext.commit("editPost", editedPost);
           })
