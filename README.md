@@ -40,28 +40,6 @@ For detailed explanation on how things work, checkout the [Nuxt.js docs](https:/
 
 # Comandos
 
-echo "****\*****CONFIG NODE_MODULES****\*****"
-mkdir /home/vagrant/node_modules
-ln -s /home/vagrant/node_modules /home/vagrant/project/node_modules
-
-echo "****\*****INSTALL NVM && NODEJS && NPM****\*****"
-TODO change to user vagrant??
-cd /home/vagrant
-git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
-echo "source ~/.nvm/nvm.sh" >> ~/.profile
-source ~/.profile
-nvm install 8.12
-nvm alias default 8.12
-node -v
-npm -v
-
-echo "****\*****INSTALL VUE CLI****\*****"
-npm install -g vue-cli
-
-echo "****\*****INSTALL PROJECT****\*****"
-cd /home/vagrant/project
-npm install
-
 1. Forzar cambios en los componentes .vue
 
 ```
@@ -185,8 +163,8 @@ env: {
 
 ## Realtime database
 
-* [firebase init service: https://hackernoon.com/vue-nuxt-firebase-auth-database-ssr-example-tutorial-facebook-login-setup-authentication-starter-app-a6dfde0133fc] (https://hackernoon.com/vue-nuxt-firebase-auth-database-ssr-example-tutorial-facebook-login-setup-authentication-starter-app-a6dfde0133fc)
-* [cloud firestore: https://savvyapps.com/blog/definitive-guide-building-web-app-vuejs-firebase] (https://savvyapps.com/blog/definitive-guide-building-web-app-vuejs-firebase)
+- [firebase init service: https://hackernoon.com/vue-nuxt-firebase-auth-database-ssr-example-tutorial-facebook-login-setup-authentication-starter-app-a6dfde0133fc](https://hackernoon.com/vue-nuxt-firebase-auth-database-ssr-example-tutorial-facebook-login-setup-authentication-starter-app-a6dfde0133fc)
+- [cloud firestore: https://savvyapps.com/blog/definitive-guide-building-web-app-vuejs-firebase](https://savvyapps.com/blog/definitive-guide-building-web-app-vuejs-firebase)
 
 1. Crear base de datos `Realtime Database` con los siguientes permisos:
 
@@ -203,7 +181,9 @@ env: {
 2. Configurar autorizacion con correo electronico y anadir usuario administrador desde la consola de firebase.
 
 ## Cloud firestore
+
 1. Configurar permisos
+
 ```
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -282,4 +262,64 @@ export default {
     }
 }
 </script>
+```
+
+# Heroku
+
+1.  Para Ubuntu
+
+```
+sudo snap install heroku --classic
+```
+
+2. Login
+
+```
+heroku login
+```
+
+3. Crear app
+
+```
+heroku create jgregorio-blog
+```
+
+4. Genera 2 URLs y anade Heroku a GIT
+   https://jgregorio-blog.herokuapp.com/ | https://git.heroku.com/jgregorio-blog.git
+
+5. Indica que instale `devDependencies`
+
+```
+heroku config:set NPM_CONFIG_PRODUCTION=false
+```
+
+6. Configurar host 0.0.0.0 y ejecuta en modo produccion:
+
+```
+heroku config:set HOST=0.0.0.0
+heroku config:set NODE_ENV=production
+```
+
+7. Indicar a Heroku que ejecute `npm run build` via `heroku-postbuild`
+
+```
+"scripts": {
+  "dev": "nuxt",
+  "build": "nuxt build",
+  "start": "nuxt start",
+  "heroku-postbuild": "npm run build"
+}
+```
+
+8. Anade variables de entorno para firebase
+
+```
+heroku config:set apiKey=APIKEY
+...
+```
+
+8. Despliega la app
+
+```
+git push heroku master
 ```

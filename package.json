@@ -1,6 +1,9 @@
 {
   "name": "blog",
   "version": "1.0.0",
+  "engines": {
+    "node": "8.12.0"
+  },
   "description": "Blog con Nuxt y MarkDown",
   "author": "jgregorio",
   "private": true,
@@ -30,7 +33,8 @@
     "serve": "serve dist/ -c serve.json",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
-    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
+    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
+    "heroku-postbuild": "npm run build"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
