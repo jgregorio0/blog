@@ -1,5 +1,5 @@
 const axios = require("axios");
-const firebaseEnv = require("./firebase.env");
+// const firebaseEnv = require("./firebase.env");
 
 module.exports = {
   mode: "universal",
@@ -65,14 +65,12 @@ module.exports = {
     extend(config, ctx) {}
   },
   env: {
-    firebaseUrl: process.env.FIREBASE_URL || firebaseEnv.databaseURL,
+    firebaseUrl: process.env.databaseURL /*  || firebaseEnv.databaseURL */,
     firebaseSignUpUrl:
-      process.env.FIREBASE_SIGN_UP_URL ||
       "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=",
     firebaseLoginUrl:
-      process.env.FIREBASE_LOGIN_URL ||
       "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=",
-    firebaseApiKey: process.env.FIREBASE_API_KEY || firebaseEnv.apiKey
+    firebaseApiKey: process.env.apiKey /*  || firebaseEnv.apiKey */
   },
   router: {
     base: "/blog/",
