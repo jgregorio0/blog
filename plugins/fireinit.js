@@ -1,27 +1,16 @@
+// import firebaseConfig from "~/firebase.env";
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/auth";
 
-const firebaseConfig;
-try {
-  // import for static site
-  import firebaseConfig from "~/firebase.env";
-} catch (e) {
-  // environment variables heroku
-  firebaseConfig = {
-    apiKey: process.env.apiKey,
-    authDomain: process.env.authDomain,
-    databaseURL: process.env.databaseURL,
-    projectId: process.env.projectId,
-    storageBucket: process.env.storageBucket,
-    messagingSenderId: process.env.messagingSenderId
-  };
-}
-
-// Error if firebase config is not defined
-if (!firebaseConfig){
-    throw new Error("firebaseConfig not defined")
-}
+const firebaseConfig = {
+  apiKey: process.env.apiKey,
+  authDomain: process.env.authDomain,
+  databaseURL: process.env.databaseURL,
+  projectId: process.env.projectId,
+  storageBucket: process.env.storageBucket,
+  messagingSenderId: process.env.messagingSenderId
+};
 
 // init firebase
 if (!firebase.apps.length) {
