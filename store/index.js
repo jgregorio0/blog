@@ -1,7 +1,5 @@
 import Vuex from "vuex";
-import axios from "axios";
 import Cookie from "js-cookie";
-//import firebase from "firebase";
 import fb from "~/services/fireinit.js";
 
 const createStore = () => {
@@ -21,7 +19,6 @@ const createStore = () => {
     },
     mutations: {
       setPosts(state, posts) {
-        // console.log("setPosts", posts);
         state.loadedPosts = posts;
       },
       addPost(state, post) {
@@ -48,16 +45,18 @@ const createStore = () => {
     actions: {
       nuxtServerInit(vuexContext, context) {
         return new Promise((resolve, reject) => {
-          fb.posts.orderBy("updatedDate", "desc").onSnapshot(querySnapshot => {
-            let postsArray = [];
-            querySnapshot.forEach(doc => {
-              let post = doc.data();
-              post.id = doc.id;
-              postsArray.push(post);
+          fb.posts
+            .orderBy("updatedDate", "desc")
+            .onSnapshot(querySnapshot => {
+              let postsArray = [];
+              querySnapshot.forEach(doc => {
+                let post = doc.data();
+                post.id = doc.id;
+                postsArray.push(post);
+              });
+              vuexContext.commit("setPosts", postsArray);
+              resolve();
             });
-            vuexContext.commit("setPosts", postsArray);
-            resolve();
-          });
         });
 
         //  console.log("nuxtServerInit");
@@ -91,6 +90,19 @@ const createStore = () => {
           .catch(e => {
             console.error(e);
           });*/
+      },
+      loadPosts(vuexContext) {
+        return fb.posts
+          .orderBy("updatedDate", "desc")
+          .onSnapshot(querySnapshot => {
+            let postsArray = [];
+            querySnapshot.forEach(doc => {
+              let post = doc.data();
+              post.id = doc.id;
+              postsArray.push(post);
+            });
+            vuexContext.commit("setPosts", postsArray);
+          });
       },
       setPosts(vuexContext, posts) {
         vuexContext.commit("setPosts", posts);

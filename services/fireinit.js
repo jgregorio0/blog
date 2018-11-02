@@ -1,5 +1,5 @@
 import firebaseConfig from "~/firebase.env";
-import firebase from "firebase";
+import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 
