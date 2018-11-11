@@ -1,6 +1,6 @@
 const axios = require("axios");
 // todo for generate 
-const firebaseEnv = require("./firebase.env");
+// const firebaseEnv = require("./firebase.env");
 
 module.exports = {
   mode: "universal",
