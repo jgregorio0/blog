@@ -71,7 +71,13 @@ module.exports = {
       "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=",
     firebaseLoginUrl:
       "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=",
-    firebaseApiKey: process.env.apiKey /*  || firebaseEnv.apiKey */
+    firebaseApiKey: process.env.apiKey /*  || firebaseEnv.apiKey */,
+    apiKey: "" + process.env.apiKey,
+    authDomain: "" + process.env.authDomain,
+    databaseURL: "" + process.env.databaseURL,
+    projectId: "" + process.env.projectId,
+    storageBucket: "" + process.env.storageBucket,
+    messagingSenderId: "" + process.env.messagingSenderId
   },
   router: {
     /* base: "/blog/", */
