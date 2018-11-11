@@ -11,7 +11,7 @@ const firebaseConfig = {
   storageBucket: "" + process.env.storageBucket,
   messagingSenderId: "" + process.env.messagingSenderId
 };
-console.log('firebaseConfig :', firebaseConfig);
+// console.log('firebaseConfig :', firebaseConfig);
 
 if (!firebaseConfig) {
   throw new Error("missing firebase-config.js config");
