@@ -104,6 +104,23 @@ const createStore = () => {
             vuexContext.commit("setPosts", postsArray);
           });
       },
+      loadPost(vuexContext, postId) {
+        // console.log("loadPost", postId);
+        return fb.posts
+          .doc(postId)
+          .get()
+          .then(res => {
+            if (!res.exists) {
+              throw new Error("document not found for id " + postId);
+            }
+            // console.log("res", res);
+            // console.log('res.data()', res.data())
+            return { loadedPost: { ...res.data(), id: res.id } };
+          })
+          .catch(e => {
+            console.error(e);
+          });
+      },
       setPosts(vuexContext, posts) {
         vuexContext.commit("setPosts", posts);
       },

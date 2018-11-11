@@ -1,4 +1,4 @@
-## BLOG
+_## BLOG
 
 > Blog con Nuxt y MarkDown
 

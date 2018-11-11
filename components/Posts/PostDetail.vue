@@ -1,6 +1,5 @@
 <template>
   <div class="single-post-page">
-<!-- <Spinner v-if="loadedPost == null"></Spinner> -->
     <section class="post">
       <article>
         <!-- TITLE AND DETAILS -->

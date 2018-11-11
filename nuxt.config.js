@@ -1,5 +1,6 @@
 const axios = require("axios");
-// const firebaseEnv = require("./firebase.env");
+// todo for generate 
+const firebaseEnv = require("./firebase.env");
 
 module.exports = {
   mode: "universal",
@@ -73,7 +74,7 @@ module.exports = {
     firebaseApiKey: process.env.apiKey /*  || firebaseEnv.apiKey */
   },
   router: {
-    base: "/blog/",
+    /* base: "/blog/", */
     extendRoutes(routes, resolve) {
       routes.push({
         path: "*",
@@ -89,20 +90,35 @@ module.exports = {
   generate: {
     routes: function() {
       return axios
-        .get(firebaseEnv.databaseURL + "/posts.json")
+        .get(firebaseEnv.firestoreURL + "posts/")
         .then(res => {
+          console.log('res :', res);
+          console.log("res.data :", res.data);
           const postsArray = [];
           for (let key in res.data) {
-            postsArray.push({
-              route: "/posts/" + key,
-              payload: { postData: res.data[key] }
-            });
+            postsArray.push({ route: "/posts/" + key });
           }
           return postsArray;
         })
         .catch(e => {
           console.error(e);
         });
+      
+      /* return axios
+        .get(firebaseEnv.databaseURL + "/posts.json")
+        .then(res => {
+          const postsArray = [];
+          for (let key in res.data) {
+            postsArray.push({
+              route: "/posts/" + key/* ,
+              payload: { loadedPosts: res.data } */
+            /*});
+          }
+          return postsArray;
+        })
+        .catch(e => {
+          console.error(e);
+        }); */
     }
   }
 };

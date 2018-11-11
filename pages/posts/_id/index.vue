@@ -4,42 +4,69 @@
 
 <script>
 import PostDetail from "@/components/Posts/PostDetail.vue";
-// import axios from "axios";
+import axios from "axios";
 import fb from "~/services/fireinit.js";
 
 export default {
   components: {
     PostDetail
   },
-  asyncData(context) {
-    if (context.payload) {
-      context.app.head.title = context.payload.postData.title;
-      return {
+  computed: {
+    loadedPost() {
+      return this.$store.getters.loadedPosts.find(post => post.id === this.$route.params.id);
+    }
+  },
+  head() {
+    return this.loadedPost
+      ? {
+          title: `${this.loadedPost.title}`
+        }
+      : false;
+  },
+  fetch({ store, error, params, payload }) {
+    // console.log("asyncData", context.params.id);
+    /* if (payload) {
+      // loadPost on static generation
+      // context.app.head.title = context.payload.postData.title;
+      /* return {
         loadedPost: context.payload.postData
-      };
-    } else {
-      // console.log('asyncData', context.params.postId)
-      return fb.posts
-        .doc(context.params.id)
-        .get()
-        .then(res => {
+      }; */
+      /*console.log('payload :', payload);
+      store.commit("setPosts", payload.loadedPosts);
+    } else { */
+      if (!store.state.loadedPosts) {
+        store.dispatch("loadPosts");
+      }
+      
+      const post = store.getters.loadedPosts.find(post => post.id === params.id)
+
+      if (!post) {
+        error({ statusCode: 404, message: "Post not found" });
+      }
+
+      // (do not load post) load post by id
+      // todo fix buefyshop
+      /* context.app.store
+        .dispatch("loadPost", context.params.id) */
+      /* .then(res => {
           if (!res.exists) {
-            throw new Error("document not found for id " + context.params.id);
+            throw new Error("document not found for id " + postId);
           }
-          // console.log("res", res);
-          // console.log('res.data()', res.data())
+
+          console.log("res", res);
+          console.log("res.data()", res.data());
           context.app.head.title = res.data().title;
-          return {
-            loadedPost: { ...res.data(), id: res.id }
-          };
+          return { loadedPost: { ...res.data(), id: res.id } };
         })
         .catch(e => {
           console.error(e);
-        });
-      /* return axios
-        .get(process.env.firebaseUrl + "/posts/" + context.params.id + ".json")
+        }); */
+
+      /* AXIOS Version
+       return axios
+        .get(process.env.firebaseUrl + "/posts/" + params.id + ".json")
         .then(res => {
-          context.app.head.title = res.data.title;
+          // context.app.head.title = res.data.title;
           return {
             loadedPost: res.data
           };
@@ -47,7 +74,7 @@ export default {
         .catch(e => {
           console.error(e);
         }); */
-    }
+    // }
   }
 };
 </script>
