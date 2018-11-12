@@ -1,16 +1,16 @@
-// import firebaseConfig from "~/firebase.env";
+import firebaseConfig from "~/firebase.env";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 
-const firebaseConfig = {
+/* TODO const firebaseConfig = {
   apiKey: "" + process.env.apiKey,
   authDomain: "" + process.env.authDomain,
   databaseURL: "" + process.env.databaseURL,
   projectId: "" + process.env.projectId,
   storageBucket: "" + process.env.storageBucket,
   messagingSenderId: "" + process.env.messagingSenderId
-};
+}; */
 // console.log('firebaseConfig :', firebaseConfig);
 
 if (!firebaseConfig) {

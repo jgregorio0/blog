@@ -45,18 +45,16 @@ const createStore = () => {
     actions: {
       nuxtServerInit(vuexContext, context) {
         return new Promise((resolve, reject) => {
-          fb.posts
-            .orderBy("updatedDate", "desc")
-            .onSnapshot(querySnapshot => {
-              let postsArray = [];
-              querySnapshot.forEach(doc => {
-                let post = doc.data();
-                post.id = doc.id;
-                postsArray.push(post);
-              });
-              vuexContext.commit("setPosts", postsArray);
-              resolve();
+          fb.posts.orderBy("updatedDate", "desc").onSnapshot(querySnapshot => {
+            let postsArray = [];
+            querySnapshot.forEach(doc => {
+              let post = doc.data();
+              post.id = doc.id;
+              postsArray.push(post);
             });
+            vuexContext.commit("setPosts", postsArray);
+            resolve();
+          });
         });
 
         //  console.log("nuxtServerInit");

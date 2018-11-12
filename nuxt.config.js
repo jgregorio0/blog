@@ -5,31 +5,31 @@ const axios = require("axios");
 module.exports = {
   mode: "universal",
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {},
   /*
-  ** Headers
-  ** Common headers are already provided by @nuxtjs/pwa preset
-  */
+   ** Headers
+   ** Common headers are already provided by @nuxtjs/pwa preset
+   */
   head: {},
   /*
-  ** Customize the progress-bar color
-  */
+   ** Customize the progress-bar color
+   */
   loading: { color: "#3B8070" },
   /*
-  ** Customize app manifest
-  */
+   ** Customize app manifest
+   */
   manifest: {
     theme_color: "#3B8070"
   },
   /*
-  ** Modules
-  */
+   ** Modules
+   */
   modules: ["@nuxtjs/pwa", "bootstrap-vue/nuxt", "nuxt-fontawesome"],
   /*
-  ** fontawesome
-  */
+   ** fontawesome
+   */
   fontawesome: {
     component: "fa",
     imports: [
@@ -42,26 +42,27 @@ module.exports = {
           "faSignOutAlt",
           "faPlusSquare",
           "faSave",
-          "faBan"
+          "faBan",
+          "faDownload"
         ]
       }
     ]
   },
   /*
-  ** Global CSS
-  */
+   ** Global CSS
+   */
   css: ["~assets/styles/main.css"],
   /*
-  ** Plugins to load before mounting the App
-  */
+   ** Plugins to load before mounting the App
+   */
   plugins: ["~plugins/core-components.js"],
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     /*
-    ** You can extend webpack config here
-    */
+     ** You can extend webpack config here
+     */
     maxChunkSize: 300000,
     extend(config, ctx) {}
   },
@@ -98,8 +99,8 @@ module.exports = {
       return axios
         .get(firebaseEnv.firestoreURL + "posts/")
         .then(res => {
-          console.log('res :', res);
-          console.log("res.data :", res.data);
+          // console.log('res :', res);
+          // console.log("res.data :", res.data);
           const postsArray = [];
           for (let key in res.data) {
             postsArray.push({ route: "/posts/" + key });
@@ -109,7 +110,7 @@ module.exports = {
         .catch(e => {
           console.error(e);
         });
-      
+
       /* return axios
         .get(firebaseEnv.databaseURL + "/posts.json")
         .then(res => {
@@ -118,7 +119,7 @@ module.exports = {
             postsArray.push({
               route: "/posts/" + key/* ,
               payload: { loadedPosts: res.data } */
-            /*});
+      /*});
           }
           return postsArray;
         })
