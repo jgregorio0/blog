@@ -1,6 +1,6 @@
 <template>
   <div class="single-post-page">
-    <section class="post">
+    <section class="post container">
       <article>
         <!-- TITLE AND DETAILS -->
         <h1 class="post-title">{{ loadedPost.title }}</h1>
@@ -9,17 +9,13 @@
         </div>
         <!-- MARKDOWN VIEWER -->
         <div class="row">
-          <div class="col-9 post-content js-toc-content">
+          <div class="col-12 order-2 col-md-9 order-md-1 post-content js-toc-content">
             <!-- TODO MD VIEWER -->
             <span v-html="contentHTML"></span>
           </div>
-          <div class="col-3 js-toc"></div>
+          <div class="col-12 order-1 col-md-3 order-md-2 js-toc"></div>
         </div>
       </article>
-    </section>
-    <section class="post-feedback">
-      <!-- TODO COMMENTS -->
-      <p>Let me know what you think about the post, send email to <a href="mailto:gregoriojesus0@gmail.com">asdf@asdf.com</a>.</p>
     </section>
   </div>
 </template>

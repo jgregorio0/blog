@@ -315,10 +315,9 @@ heroku config:set NODE_ENV=production
 
 ```
 heroku config:set apiKey=APIKEY
-...
 ```
 
-8. Despliega la app
+9. Despliega la app
 
 ```
 git push heroku master
