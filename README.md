@@ -159,6 +159,8 @@ env: {
 }
 ```
 
+* Es necesario modificar service/fireinit.js para desarrollo y produccion
+
 # Firebase Configuracion
 
 ## Realtime database
@@ -322,3 +324,53 @@ heroku config:set apiKey=APIKEY
 ```
 git push heroku master
 ```
+
+# Nuxt Sitemap
+> Ref: [https://www.vuejsradar.com/improving-seo-nuxtjs-site-with-sitemap-module/](https://www.vuejsradar.com/improving-seo-nuxtjs-site-with-sitemap-module/) 
+1. Instalar el modulo
+```
+npm install @nuxtjs/sitemap
+```
+2. nuxt.config.js
+```
+modules: [
+  '@nuxtjs/sitemap'
+],
+
+sitemap: {
+    path: '/sitemap.xml',
+    hostname: 'https://blog.jgregorio.es',
+    cacheTime: 1000 * 60 * 15,
+    gzip: true,
+    exclude: ['/admin', '/admin/**'],
+    generate: true,
+    routes () {
+      return (
+        axios
+          .get(
+            'https://firestore.googleapis.com/v1beta1/projects/blog-17d1f/databases/(default)/documents/posts/'
+          )
+          .then(res => {
+            const postsArray = []
+            for (let fields of res.data.documents) {
+              if (
+                fields &&
+                fields.fields &&
+                fields.fields.id &&
+                fields.fields.id.stringValue
+              ) {
+                postsArray.push('/posts/' + fields.fields.id.stringValue)
+              }
+            }
+            return postsArray
+          })
+          .catch(e => {
+            console.error(e)
+          })
+      )
+    }
+  }
+```
+
+# TODO
+1. Modificar URLs de detalle con el nombre
