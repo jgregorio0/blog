@@ -374,5 +374,4 @@ sitemap: {
 
 # TODO
 1. Modificar URLs de detalle con el nombre
-1. Mostrar solo indice en listado
-1. Eliminar URL admin
+
