@@ -24,7 +24,7 @@
       :class="'card-text post-content js-toc-content-' + this.id"
       v-html="contentHTML"
     ></p>
-    <p :class="'js-toc-' + this.id"></p>
+    <p :class="'card-text post-content js-toc-' + this.id"></p>
   </b-card>
 </template>
 
@@ -113,7 +113,7 @@ export default {
 
 <style scoped>
 .post-content {
-  height: 200px;
+  height: 500px;
   overflow-y: scroll;
 }
 .post-title {
