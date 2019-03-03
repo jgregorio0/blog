@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <h1>Latest Posts</h1>
+    <!-- <h1>Latest Posts</h1> -->
     <PostList :posts="loadedPosts"></PostList>
   </div>
 </template>

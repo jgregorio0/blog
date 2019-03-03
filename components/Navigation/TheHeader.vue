@@ -9,9 +9,9 @@
   <b-navbar-nav class="header-items">
     <b-nav-item :to="{name: 'posts'}">Posts</b-nav-item>
     <b-nav-item :to="{name: 'about'}">About</b-nav-item>
-    <b-nav-item :to="{name: 'admin'}">Admin</b-nav-item>
+    <!-- <b-nav-item :to="{name: 'admin'}">Admin</b-nav-item> -->
   </b-navbar-nav>
-  
+
   <b-navbar-nav v-if="this.$store.getters.isAuthenticated" class="ml-auto">
     <b-nav-form >
         <b-button type="button" class="mr-1" size="sm" variant="success"
@@ -30,25 +30,25 @@
 </template>
 
 <script>
-import { faSignOutAlt, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 
 export default {
   methods: {
-    logout() {
-      this.$store.dispatch("logout");
-      this.$router.push("/");
+    logout () {
+      this.$store.dispatch('logout')
+      this.$router.push('/')
     },
     goToNewPost () {
-      this.$router.push("/admin/new-post");
+      this.$router.push('/admin/new-post')
     }
   },
   computed: {
-    faSignOutAlt() {
-      return faSignOutAlt;
+    faSignOutAlt () {
+      return faSignOutAlt
     },
-    faPlusSquare() {
-      return faPlusSquare;
+    faPlusSquare () {
+      return faPlusSquare
     }
   }
-};
+}
 </script>
