@@ -372,6 +372,13 @@ sitemap: {
   }
 ```
 
+# THEME
+> Bootstrap Clean Blog Theme [https://github.com/BlackrockDigital/startbootstrap-clean-blog](https://github.com/BlackrockDigital/startbootstrap-clean-blog)
+
+
+
 # TODO
 1. Modificar URLs de detalle con el nombre
+1. adaptar theme Clean Blog Theme 
+1. eliminar bootstrap-vue
 

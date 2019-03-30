@@ -9,7 +9,6 @@
 }
 
 /*header and sidenav*/
-
 @media (max-width: 768px) {
   .header-items {
     display: none!important;
