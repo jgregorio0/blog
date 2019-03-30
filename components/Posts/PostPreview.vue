@@ -1,5 +1,5 @@
 <template>
-  <b-card class="post-preview" :footer="updatedDate" :id="this.id">
+  <b-card class="post-preview" footer-class="post-meta" :id="this.id">
     <div slot="header">
       <!-- TITLE / DETAIL -->
       <nuxt-link
@@ -11,12 +11,6 @@
         <fa :icon="faExternalLinkAlt"/>
         <span>{{title}}</span>
       </nuxt-link>
-      <!-- DOWNLOAD -->
-      <b-button-group class="float-right">
-        <b-button @click="downloadFile" variant="link">
-          <fa :icon="faDownload"/>
-        </b-button>
-      </b-button-group>
     </div>
     <p
       v-cloak
@@ -25,6 +19,13 @@
       v-html="contentHTML"
     ></p>
     <p :class="'card-text post-content js-toc-' + this.id"></p>
+<div slot="footer">
+  <span>{{updatedDate}}</span>
+  <!-- DOWNLOAD -->
+        <!-- <b-button @click="downloadFile" variant="link">
+          <fa :icon="faDownload"/>
+        </b-button> -->
+</div>
   </b-card>
 </template>
 
@@ -117,9 +118,10 @@ export default {
   overflow-y: scroll;
 }
 .post-title {
-  width: 240px;
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
+  color:#212529;
 }
 </style>
