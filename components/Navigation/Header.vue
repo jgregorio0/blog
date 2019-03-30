@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>blog.jgregorio.es</h1>
+            <h1>Blog jgregorio</h1>
             <span class="subheading">A Blog / Snippets repository</span>
           </div>
         </div>
