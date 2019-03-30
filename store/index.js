@@ -6,11 +6,15 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       loadedPosts: [],
+      page: 1,
       token: null
     },
     getters: {
       loadedPosts(state) {
         return state.loadedPosts;
+      },
+      page(state){
+        return state.page
       },
       isAuthenticated(state) {
         // console.log("isAuthenticated");
@@ -40,6 +44,9 @@ const createStore = () => {
       },
       clearToken(state) {
         state.token = null;
+      },
+      setPage(state, page){
+        state.page = page
       }
     },
     actions: {
@@ -254,6 +261,16 @@ const createStore = () => {
         vuexContext.commit("clearToken");
         Cookie.remove("token");
         Cookie.remove("tokenExpiration");
+      },
+      nextPage(vuexContext) {
+        if (vuexContext.state.loadedPosts.length > vuexContext.state.page * 9) {
+          vuexContext.commit("setPage", vuexContext.state.page + 1)
+        }
+      },
+      previousPage(vuexContext) {
+        if (vuexContext.state.page > 1) {
+          vuexContext.commit("setPage", vuexContext.state.page - 1)
+        }
       }
     }
   });
