@@ -17,7 +17,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <nuxt-link class="nav-link" to="/">Home</nuxt-link>
+            <nuxt-link class="nav-link" to="/index.html">Home</nuxt-link>
           </li>
           <li class="nav-item">
             <nuxt-link class="nav-link" :to="{name: 'about'}">About</nuxt-link>
