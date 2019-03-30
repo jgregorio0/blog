@@ -4,15 +4,13 @@
     <Header></Header>
     <!-- <TheHeader></TheHeader> -->
     <!-- <TheSidenav></TheSidenav> -->
-    <!-- <nuxt/> -->
+    <nuxt/>
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/Navigation/Navigation.vue'
 import Header from '@/components/Navigation/Header.vue'
-import TheHeader from '@/components/Navigation/TheHeader.vue'
-import TheSidenav from '@/components/Navigation/TheSidenav.vue'
 
 export default {
   head: {
@@ -20,9 +18,7 @@ export default {
   },
   components: {
     Navigation,
-    Header,
-    TheHeader,
-    TheSidenav
+    Header
   }
 }
 </script>
