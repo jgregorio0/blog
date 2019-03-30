@@ -1,19 +1,27 @@
 <template>
-  <PostDetail :loadedPost="loadedPost"></PostDetail>
+  <div>
+    <HeaderDetail :loadedPost="loadedPost"></HeaderDetail>
+    <PostDetail :loadedPost="loadedPost"></PostDetail>
+  </div>
 </template>
 
 <script>
+import HeaderDetail from "@/components/Navigation/HeaderDetail.vue";
 import PostDetail from "@/components/Posts/PostDetail.vue";
 import axios from "axios";
 import fb from "~/services/fireinit.js";
 
 export default {
+  layout: "detail",
   components: {
-    PostDetail
+    PostDetail,
+    HeaderDetail
   },
   computed: {
     loadedPost() {
-      return this.$store.getters.loadedPosts.find(post => post.id === this.$route.params.id);
+      return this.$store.getters.loadedPosts.find(
+        post => post.id === this.$route.params.id
+      );
     }
   },
   head() {
@@ -31,24 +39,24 @@ export default {
       /* return {
         loadedPost: context.payload.postData
       }; */
-      /*console.log('payload :', payload);
+    /*console.log('payload :', payload);
       store.commit("setPosts", payload.loadedPosts);
     } else { */
-      if (!store.state.loadedPosts) {
-        store.dispatch("loadPosts");
-      }
-      
-      const post = store.getters.loadedPosts.find(post => post.id === params.id)
+    if (!store.state.loadedPosts) {
+      store.dispatch("loadPosts");
+    }
 
-      if (!post) {
-        error({ statusCode: 404, message: "Post not found" });
-      }
+    const post = store.getters.loadedPosts.find(post => post.id === params.id);
 
-      // (do not load post) load post by id
-      // todo fix buefyshop
-      /* context.app.store
+    if (!post) {
+      error({ statusCode: 404, message: "Post not found" });
+    }
+
+    // (do not load post) load post by id
+    // todo fix buefyshop
+    /* context.app.store
         .dispatch("loadPost", context.params.id) */
-      /* .then(res => {
+    /* .then(res => {
           if (!res.exists) {
             throw new Error("document not found for id " + postId);
           }
@@ -62,7 +70,7 @@ export default {
           console.error(e);
         }); */
 
-      /* AXIOS Version
+    /* AXIOS Version
        return axios
         .get(process.env.firebaseUrl + "/posts/" + params.id + ".json")
         .then(res => {
