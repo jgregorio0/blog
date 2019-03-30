@@ -1,0 +1,8 @@
+User-Agent: *
+Disallow:
+Disallow: /admin
+Allow: /about
+Allow: /posts
+Allow: /index.html
+
+Sitemap: https://blog.jgregorio.es/sitemap.xml
